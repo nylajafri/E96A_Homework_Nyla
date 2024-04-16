@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
         //transform.position += multiplier * velocity * Time.deltaTime; 
         if (rb.velocity.magnitude < 10)
         {
-            Vector3 test = new Vector3(123, 0, 0); 
             rb.AddForce(direction*multiplier);
         }
     }
