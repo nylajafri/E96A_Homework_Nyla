@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] 
     float jumpForce = 400f;
 
-    bool onGround = false; 
+    bool onGround = false;
+    bool canDoubleJump = false; 
     // Start is called before the first frame update
     void Start()
     {
@@ -46,20 +47,29 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Jumping!"); 
 
-        if(!onGround)
+        if(onGround)
         {
-            return; 
+            Vector3 jumpForceV = new Vector3(0, jumpForce, 0);
+            rb.AddForce(jumpForceV);
+            onGround = false;
+            canDoubleJump = true;
         }
         
-        Vector3 jumpForce1 = new Vector3 (0,jumpForce,0);
-        rb.AddForce(jumpForce1);
+        else if (canDoubleJump)
+        {
+            Vector3 jumpForceV = new Vector3(0, jumpForce, 0);
+            rb.AddForce(jumpForceV);
+            canDoubleJump = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Floor"))
         {
+            Debug.Log("Enter");
             onGround = true;
+            canDoubleJump = false;
         }
     }
 
@@ -67,6 +77,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Floor"))
         {
+            Debug.Log("Exit");
             onGround = false; 
         }
     }
