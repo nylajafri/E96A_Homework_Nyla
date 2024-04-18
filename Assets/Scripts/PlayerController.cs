@@ -63,6 +63,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            onGround = true;
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Floor"))
@@ -74,11 +82,13 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnCollisionExit(Collision collision)
+
     {
         if (collision.gameObject.CompareTag("Floor"))
         {
             Debug.Log("Exit");
-            onGround = false; 
+            onGround = false;
         }
     }
+
 }
